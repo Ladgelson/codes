@@ -1,0 +1,54 @@
+<script src="https://unpkg.com/vue"></script>
+
+<style>
+    .css {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .demo {
+        width: 100px;
+        height: 100px;
+        background-color: dodgerblue;
+    }
+
+    .c1 {
+        background-color: green;
+    }
+
+    .c2 {
+        background-color: red;
+    }
+
+    .c3 {
+        background-color: gold;
+    }
+</style>
+<div id="app">
+    <div class="css">
+        <div class="demo" :class="aplicarC1F" @click="aplicarC1 = !aplicarC1"></div>
+        <div class="demo" :class="[classeCSS]"></div>
+        <div class="demo" :class="[classeCSS]"></div>
+    </div>
+    <hr>
+    <input type="text" v-model="classeCSS">
+</div>
+
+
+<script>
+    new Vue({
+        el:'#app',
+        data : {
+            aplicarC1 : false,
+            classeCSS : 'c1'
+        },
+        computed : {
+            aplicarC1F(){
+                return {
+                    c1: this.aplicarC1
+                }
+            }
+        },
+        
+    })
+</script>

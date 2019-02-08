@@ -1,0 +1,28 @@
+<script src="https://unpkg.com/vue"></script>
+
+<div id="app">
+    <input type="text" v-on:input="alterarMessage">
+    <p>{{ message }}</p>
+    <a v-bind:href="link">Google</a> 
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            link : "www.google.com.br",// para se utilizar esse link, precisa-se usar o v-bind
+            // que nada mais é do que uma maneira de retornar essa string para o href
+            message: 'Hello World!'
+        },
+        methods: {
+            alterarMessage(event) {
+                this.message = event.target.value
+            }
+        }
+    })
+    new Vue({
+        el: '#aqui',
+        data: {
+            message: "Ola mundo!"
+        }
+    })
+</script>

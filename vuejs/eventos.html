@@ -1,0 +1,33 @@
+<script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+
+<div id="app">
+    <p>{{contador}}</p>
+    <button v-on:click="somamais(7)">++</button>
+    <p v-on:mousemove="pegaXY" style="padding:50px; border: solid 3px black;">mouse - posicao {{x}}:{{y}}
+        <span v-on:mousemove.stop.prevent="">Aqui mesmo</span>
+    </p>
+    <input type="text" v-on:keyup.enter="alerta">
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            contador: 0,
+            x: 0,
+            y: 0
+        },
+        methods: {
+            somamais(passo){
+                this.contador+=passo;
+            },
+            pegaXY(event){
+                this.x = event.clientX;
+                this.y = event.clientY;
+            },
+            alerta(){
+                alert('irineu')
+            }
+        }
+    })
+</script>
