@@ -1,23 +1,53 @@
-#define _USE_MATH_DEFINES
 #include <bits/stdc++.h>
+#define PI 3.14159265359
+#define MAXN 10010
+#define EPS 1e-9
 using namespace std;
 
+double getVolume(double raio){ return PI * raio * raio; }
+
+int n, m;
+
+double volumes[MAXN];
+
+bool can(double v){
+    int cnt = 0;
+    for(int i = 0; i < n; i++){
+        cnt += (int)(volumes[i]/v);
+    }
+    return cnt >= m;
+}
 
 int main(){
-    int n,i;
-    cin >> n;
-    while(n--){
-        int torta, convidado;
-        cin >> torta >> convidado;
-        double c(0);
-        for(i = 0; i < torta; i++){
-            int aux;
-            cin >> aux;
-            c += (aux*aux)*3.141592653589793238462643383279502884L;
+
+    int t;
+
+    cin >> t;
+
+    while(t--){
+        cin >> n >> m;
+        m++;
+        for(int i = 0; i < n; i++){
+            double raio;
+            cin >> raio;
+            volumes[i] = getVolume(raio);
         }
 
-        printf("%.4f",c/(1+convidado));
-        c = 0;
+        double ans = 0.0;
+
+        double ini = 0.0, fim = MAXN;
+        while(fabs(fim-ini) > EPS){
+            double meio = (ini+fim)/2;
+            double v = getVolume(meio);
+            if(can(v)){
+                ans = v;
+                ini = meio;
+            }else{
+                fim = meio;
+            }
+        }
+        printf("%.4f\n", ans);
+
     }
     return 0;
 }

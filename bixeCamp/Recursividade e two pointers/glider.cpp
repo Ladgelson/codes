@@ -1,48 +1,50 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
-int max(int a, int b){
-    if(a > b)return a;
-    else return b;
-}
+const int MAXN = 200010;
 
-int n, altura;
+struct seg{
+    int x1, x2, len;
+};
+int n, h;
 
-int main(){
-    cin >> n >> altura;
-    pair<int,int>vet[n];
-    for(int i = 0; i < n; i++){
-        cin >> vet[i].first >> vet[i].second;
-    }
-    int maiorDist = 0;
-    for(int i = 0; i <= vet[n-1].second;i++){
-        int alturaAtual = altura;
-        int indiceDoPair = 0;
-        int j = i;
-        while(i > vet[indiceDoPair].second)indiceDoPair++;
-        int inf = vet[indiceDoPair].first,sup=vet[indiceDoPair].second;
-        if(inf < i)inf = i;
-        cout << "Começando de " << j << endl;
-        while(alturaAtual > 0){
-            cout << j<<" " <<alturaAtual << " "<< inf<< " "<< sup<< endl;
-            if(j < inf || j >= sup){
-                alturaAtual--;
-            }
-            if(j >= inf){
-                inf += (sup - inf);
-                j+=(sup - inf);
-            } else {
-                j++;
-            }
-            if(inf > sup){
-                if(indiceDoPair != n-1)indiceDoPair++;
-                inf = vet[indiceDoPair].first,sup=vet[indiceDoPair].second;
-            }
+seg segs[MAXN];
+int prefix_sum[MAXN];
+
+int bb(int i){
+    int ini = i+1, fim = n;
+    int ans = i;
+    int new_h = h;
+
+    while(ini <= fim){
+        int meio = (ini+fim) / 2;
+        int distancia = prefix_sum[meio] - prefix_sum[i];
+        if(distancia <= h){
+            new_h = h - distancia;
+            ans = meio;
+            ini = meio+1;
+        }else{
+            fim = meio-1;
         }
-        int distancia = j - i;
-        printf("\ndistancia : %d\n",distancia);
-        maiorDist = max(maiorDist,distancia);
     }
-    cout << maiorDist << endl;
+    if(new_h == 0)
+        return segs[ans].x1;
+
+    return segs[ans].x2 + new_h;
+}
+int main()
+{
+    cin >> n >> h;
+    cin >> segs[1].x1 >> segs[1].x2;
+    for(int i = 2; i <= n; ++i){
+        cin >> segs[i].x1 >> segs[i].x2;
+        prefix_sum[i] = prefix_sum[i-1] + (segs[i].x1 - segs[i-1].x2);
+    }
+    int ans = 0;
+    for(int i = 1; i <= n; i++){
+        ans = max(ans, bb(i) - segs[i].x1);
+    }
+    cout << ans << endl;
     return 0;
 }

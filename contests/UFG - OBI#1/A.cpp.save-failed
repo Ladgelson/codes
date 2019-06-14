@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define MAXN 100100
+#define f first
+#define s second
+#define pb push_back
+#define ins insert
+#define er erase
+#define lsb(x) ((x) & (-x))
+
+typedef long long ll;
+typedef pair<int,int> pii;
+
+/*long long n;
+
+ll ant = 1, antp = 1, aux = 0;
+
+long long fibonacci(int k){
+    ll cont = 0;
+    if(k == 0 || k == 1)return cont;
+    while(aux <= k){
+        aux = 0;
+        aux += ant+antp;
+        antp = ant;
+        ant = aux;
+        cont++;
+    }
+    return cont;
+}*/
+
+int n;
+
+map<string,int>m;
+
+int main(){
+    cin >> n;
+    for(int i=0;i<n;i++){
+        string s;
+        cin >> s;
+        m[s]++;
+    }
+    bool ok = false;
+    map<string,int>::iterator it;
+    for(it = m.begin(); it != m.end();++it){
+        if(it->second > 1){
+            ok = true;
+            cout << it->first << endl;
+        }
+    }
+    if(!ok)cout << -1 << endl;
+    return 0;
+}
+
