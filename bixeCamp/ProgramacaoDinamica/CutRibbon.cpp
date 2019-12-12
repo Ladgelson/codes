@@ -20,7 +20,7 @@ int solve(int n){
     return memo[n] = ans;
 }
 
-int main(){
+    int main(){
     int n;
     cin >> n >> cortes[0] >> cortes[1] >> cortes[2];
     memset(memo, -1, sizeof memo);
